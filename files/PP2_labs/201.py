@@ -1,14 +1,18 @@
-import math
-
+import sys
+input_data = sys.stdin.read().splitlines()
 n = int(input())
-a = list(map(int,input().split()))
 nums = {}
-for e in a:
-    if e in nums:
-        nums[e] += 1
-    else: 
-        nums[e] = 1
-vmax = -1001
-for k in nums:
-    if (nums[k]>vmax):vmax=nums[k]
-print(vmax)
+output = []
+for _ in range(n):
+    a = input().split()
+    com = a[0]
+    if com == "set":
+        k = a[1]
+        v = a[2]
+        nums[k] = v
+    else:
+        k = a[1]
+        if k in nums:
+            output.append(nums[k])
+        else: output.append("KE: no key",k,"found in the document")
+sys.stdout.write("\n".join(output))
