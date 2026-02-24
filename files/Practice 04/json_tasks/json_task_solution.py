@@ -11,3 +11,5 @@ for x in a["imdata"]:
         print(f"{str(x["l1PhysIf"]["attributes"]["dn"]):<50}{str(x["l1PhysIf"]["attributes"]["description"]):<30}{str(x["l1PhysIf"]["attributes"]["speed"]):<10}{str(x["l1PhysIf"]["attributes"]["mtu"]):<10}")
     else:
         print(f"{str(x["l1PhysIf"]["attributes"]["dn"]):<50}{' ':<30}{str(x["l1PhysIf"]["attributes"]["speed"]):<10}{str(x["l1PhysIf"]["attributes"]["mtu"]):<10}")
+
+# :<N from left N spaces
