@@ -50,7 +50,12 @@ import re
 # x = re.split("[;,\s]+", tags)
 # print(x)
 
-login = "Mirasstur228_"
+# login = "Mirasstur228_"
 
-x = re.match(r"^[A-Za-z][\w]{2,9}$", login)
-print(x)
+# x = re.match(r"^[A-Za-z][\w]{2,9}$", login)
+# print(x)
+
+p = ""
+p += "9\n"
+p += "lolo" + "\n"
+print(p)
