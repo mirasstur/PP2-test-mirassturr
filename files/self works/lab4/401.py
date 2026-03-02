@@ -80,28 +80,31 @@
 #     print("No differences")
                 
                 
-import json
-import re
-def find_value(data, pt):
-    parts = pt.split(".")
-    curr = data
-    try:
-        for part in parts:
-            key_match = re.match(r"([^\[]+)", part)
-            if not key_match:
-                return "NOT_FOUND"
-            key = key_match.group(1)
-            curr = curr[key]
-            indices = re.findall(r"\[(\d+)\]", part)
-            for idx in indices:
-                curr = curr[int(idx)]
-    except(KeyError, AttributeError, IndexError, TypeError):
-        return "NOT_FOUND"
-    return json.dumps(curr, separators=(',',':'), ensure_ascii=False)
+# import json
+# import re
+# def find_value(data, pt):
+#     parts = pt.split(".")
+#     curr = data
+#     try:
+#         for part in parts:
+#             key_match = re.match(r"([^\[]+)", part)
+#             if not key_match:
+#                 return "NOT_FOUND"
+#             key = key_match.group(1)
+#             curr = curr[key]
+#             indices = re.findall(r"\[(\d+)\]", part)
+#             for idx in indices:
+#                 curr = curr[int(idx)]
+#     except(KeyError, AttributeError, IndexError, TypeError):
+#         return "NOT_FOUND"
+#     return json.dumps(curr, separators=(',',':'), ensure_ascii=False)
 
-A = json.loads(input().strip())
-q = int(input())
-for i in range(q):
-    s = input()
-    print(find_value(A,s))
+# A = json.loads(input().strip())
+# q = int(input())
+# for i in range(q):
+#     s = input()
+#     print(find_value(A,s))
+    
+    
+    
     
