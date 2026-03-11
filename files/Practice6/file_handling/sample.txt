@@ -1,0 +1,11 @@
+Hello Its .txt file, and its is first line
+This file is for testing purposes.
+Good Luck!
+
+
+I writing this text using append mode and .write() method
+I writing this text using append mode and .write() method
+I writing this text using append mode and .write() method
+I writing this text using append mode and .write() method
+I writing this text using append mode and .write() method
+I writing this text using append mode and .write() method
