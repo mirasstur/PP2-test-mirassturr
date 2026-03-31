@@ -2,7 +2,6 @@ CREATE OR REPLACE FUNCTION get_contacts_by_pattern(p_pattern TEXT)
 RETURNS TABLE(contact_id INT, contact_name VARCHAR, phone_number VARCHAR) AS $$
 BEGIN
     RETURN QUERY 
-    -- Мы добавляем "c." перед именами столбцов, чтобы избежать путаницы
     SELECT c.contact_id, c.contact_name, c.phone_number 
     FROM contacts c
     WHERE c.contact_name ILIKE '%' || p_pattern || '%' 
