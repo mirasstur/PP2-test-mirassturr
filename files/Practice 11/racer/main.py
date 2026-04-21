@@ -9,13 +9,14 @@ HEIGHT = 800
 FPS = 60 
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Racer with Coins")
+pygame.display.set_caption("Racer Practice 11")
 
 clock = pygame.time.Clock()
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 YELLOW = (255, 223, 0)
+RED = (255,0,0)
 
 #player param
 player_width = 50
@@ -33,12 +34,22 @@ spawn_timer = 0
 
 score = 0 # counter 
 
+enemy_width = 40
+enemy_height = 80
+enemy_x = random.randint(0, WIDTH - 50)
+enemy_y = -100
+enemy_speed = 5
+
+level_up_coins = 10
+
 font = pygame.font.Font(None, 36)
 
 def spawn_coin():
     x = random.randint(0, WIDTH - coin_size)
     y = -coin_size
-    coins.append(pygame.Rect(x, y, coin_size, coin_size))
+    weight = random.choice([1,2,3]) #diff weightes
+    rect = pygame.Rect(x,y,20,20)
+    coins.append((rect, weight))
 
 running = True
 while running:
@@ -57,6 +68,16 @@ while running:
     player_x = max(0, min(WIDTH - player_width, player_x))
 
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+    
+    enemy_y += enemy_speed
+    if enemy_y > HEIGHT:
+        enemy_y = -100
+        enemy_x = random.randint(0,WIDTH - 50)
+        
+    enemy_rect = pygame.Rect(enemy_x, enemy_y, enemy_width, enemy_height)
+    
+    if player_rect.colliderect(enemy_rect):
+        running = False
 
     spawn_timer += 1
     if spawn_timer >= coin_spawn_delay:
@@ -64,20 +85,28 @@ while running:
         spawn_timer = 0
 
     for coin in coins[:]:
-        coin.y += 14
+        rect, weight = coin
+        rect.y += 5
 
-        if player_rect.colliderect(coin):
+        if player_rect.colliderect(rect):
+            score += weight #add weight score
             coins.remove(coin)
-            score += 1
-        elif coin.y > HEIGHT:
+        elif rect.y > HEIGHT:
             coins.remove(coin)
+    
+    if score >= level_up_coins:
+        enemy_speed = 8
+    if score >= level_up_coins*2:
+        enemy_speed = 11
 
     screen.fill(BLACK)
 
     pygame.draw.rect(screen, WHITE, player_rect)
+    pygame.draw.rect(screen, RED, enemy_rect)
 
-    for coin in coins:
-        pygame.draw.circle(screen, YELLOW, coin.center, coin_size // 2)
+    for rect, weight in coins:
+        rad = 5 + weight*3
+        pygame.draw.circle(screen, YELLOW, rect.center, rad)
 
     score_text = font.render(f"Coins: {score}", True, WHITE)
     screen.blit(score_text, (WIDTH - 150, 10))

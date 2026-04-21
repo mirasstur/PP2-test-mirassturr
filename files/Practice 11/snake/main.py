@@ -18,6 +18,7 @@ green = (0,255,0)
 black = (0,0,0)
 red = (255,0,0)
 blue = (0,0,255)
+yellow = (255,223,0)
 
 font = pygame.font.Font(None, 36)
 
@@ -26,9 +27,10 @@ direction = (cell, 0)
 
 score = 0
 level = 1
-speed = 11
+speed = 12
 
 foods_eaten = 0
+foods_timer = 60
 
 walls = []
 
@@ -38,7 +40,11 @@ def generate_food():
         y = random.randrange(0, height, cell)
         
         if (x,y) not in snake and (x,y) not in walls:
-            return (x,y)
+            return {
+                "pos" : (x,y),
+                "spawn_time" : pygame.time.get_ticks(),
+                "weight" : random.choice([1,2,3])
+            }
 
 food = generate_food()
 
@@ -47,7 +53,13 @@ def draw_snake():
         pygame.draw.rect(screen, green,(*seg, cell, cell))
 
 def draw_food():
-    pygame.draw.rect(screen, red, (*food, cell, cell))
+    if food["weight"] == 1:
+        color = green
+    if food["weight"] == 2:
+        color = yellow
+    if food["weight"] == 3:
+        color = red        
+    pygame.draw.rect(screen, color, (*food["pos"], cell, cell))
 
 def draw_walls():
     for wall in walls:
@@ -70,9 +82,16 @@ def add_walls():
             walls.append((x,y))
         
 running = True
+timer = 0
 
 while running:
     clock.tick(speed)
+    
+    food_life_time = 5000
+    current_time = pygame.time.get_ticks()
+    
+    if current_time - food["spawn_time"] > food_life_time:
+        food = generate_food()
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -103,13 +122,14 @@ while running:
         
     snake.insert(0, new_head)
     
-    if new_head == food:
-        score += 1
+    if new_head == food["pos"]:
+        score += food["weight"]
         foods_eaten += 1
         food = generate_food()
         upd_level()
     else:
         snake.pop()
+        
         
     screen.fill(black)
     
