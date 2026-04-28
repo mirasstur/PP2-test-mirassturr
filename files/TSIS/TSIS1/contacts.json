@@ -1,0 +1,19 @@
+[
+    {
+        "id": 2,
+        "name": "Miras",
+        "email": "Mirtur@bug.ru",
+        "birthday": "2008-03-17",
+        "group_id": 6,
+        "phones": [
+            {
+                "phone": "+77059178516",
+                "type": "work"
+            },
+            {
+                "phone": "+77717855040",
+                "type": "work"
+            }
+        ]
+    }
+]
